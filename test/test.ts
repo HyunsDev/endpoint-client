@@ -11,6 +11,8 @@ const getUser: Endpoint<getUserParameter, getUserResponse> = {
     method: "GET",
     path: "/",
     bodyParams: [],
+    pathParams: [],
+    queryParams: [],
 };
 
 // API 클라이언트
