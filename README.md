@@ -37,7 +37,7 @@ export type getEndpointResponse = {
 export const getEndpoint: Endpoint<getEndpointParameter, getEndpointResponse> =
     {
         method: "GET",
-        path: (e) => `/endpoint/${e}`,
+        path: (e) => `/endpoint/${e.pathItem}`,
         bodyParams: ["bodyItem"],
         pathParams: ["pathItem"],
         queryParams: ["queryItem"],
@@ -66,9 +66,9 @@ export const client = new Client({
 ```typescript
 ...
     const res = await client.endpoint.get({
-         pathItem: 'a';
-        bodyItem: 'b';
-        queryItem: 'c';
+        pathItem: 'a',
+        bodyItem: 'b',
+        queryItem: 'c',
     });
     console.log(res);
 ...
