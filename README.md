@@ -24,17 +24,17 @@ yarn add endpoint-client
 ```typescript
 import { Endpoint } from "endpoint-client";
 
-export type getEndpointParameter = {
+export type GetEndpointParameter = {
     pathItem: string;
     bodyItem: string;
     queryItem: string;
 };
 
-export type getEndpointResponse = {
+export type GetEndpointResponse = {
     name: string;
 };
 
-export const getEndpoint: Endpoint<getEndpointParameter, getEndpointResponse> =
+export const GetEndpoint: Endpoint<GetEndpointParameter, GetEndpointResponse> =
     {
         method: "GET",
         path: (e) => `/endpoint/${e.pathItem}`,
@@ -48,11 +48,11 @@ export const getEndpoint: Endpoint<getEndpointParameter, getEndpointResponse> =
 
 ```typescript
 import { EndpointClient } from "endpoint-client";
-import { getEndpoint } from "...";
+import { GetEndpoint } from "...";
 
 export class Client extends EndpointClient {
     readonly endpoint = {
-        get: this.endpointBuilder(getEndpoint),
+        get: this.endpointBuilder(GetEndpoint),
     };
 }
 
