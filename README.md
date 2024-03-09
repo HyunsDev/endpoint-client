@@ -24,20 +24,20 @@ yarn add endpoint-client
 ```typescript
 import { Endpoint } from "endpoint-client";
 
-export type GetEndpointParameter = {
+export type getEndpointParameter = {
     pathItem: string;
     bodyItem: string;
     queryItem: string;
 };
 
-export type GetEndpointResponse = {
+export type getEndpointResponse = {
     name: string;
 };
 
-export const GetEndpoint: Endpoint<GetEndpointParameter, GetEndpointResponse> =
+export const getEndpoint: Endpoint<getEndpointParameter, getEndpointResponse> =
     {
         method: "GET",
-        path: (e) => `/endpoint/${e.pathItem}`,
+        path: (e) => `/endpoint/${e}`,
         bodyParams: ["bodyItem"],
         pathParams: ["pathItem"],
         queryParams: ["queryItem"],
@@ -48,11 +48,11 @@ export const GetEndpoint: Endpoint<GetEndpointParameter, GetEndpointResponse> =
 
 ```typescript
 import { EndpointClient } from "endpoint-client";
-import { GetEndpoint } from "...";
+import { getEndpoint } from "...";
 
 export class Client extends EndpointClient {
     readonly endpoint = {
-        get: this.endpointBuilder(GetEndpoint),
+        get: this.endpointBuilder(getEndpoint),
     };
 }
 
@@ -66,9 +66,9 @@ export const client = new Client({
 ```typescript
 ...
     const res = await client.endpoint.get({
-        pathItem: 'a',
-        bodyItem: 'b',
-        queryItem: 'c',
+         pathItem: 'a';
+        bodyItem: 'b';
+        queryItem: 'c';
     });
     console.log(res);
 ...
