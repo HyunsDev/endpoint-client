@@ -46,6 +46,7 @@ export type Endpoint<
 export type __Experimental__Endpoint<M extends Method, P extends string> = {
   method: M;
   path: P;
+  queryParams: Record<string, any>;
   pathParams: ExtractParams<P> extends never
     ? never
     : Record<ExtractParams<P>, PathParamType>;
