@@ -8,3 +8,9 @@ export type ExtractParams<T extends string> =
     : never;
 
 export type PathParamType = string | number;
+
+/**
+ * DELETE **May** have a body.
+ * @see https://developer.mozilla.org/ko/docs/Web/HTTP/Methods/DELETE
+ */
+export type HasBodyMethod = "POST" | "PUT" | "PATCH" | "DELETE";

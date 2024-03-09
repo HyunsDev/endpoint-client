@@ -1,5 +1,5 @@
 import { Method } from "./method";
-import { ExtractParams, PathParamType } from "./utility.types";
+import { ExtractParams, HasBodyMethod, PathParamType } from "./utility.types";
 
 type value = any;
 
@@ -16,17 +16,32 @@ export type Endpoint<
 };
 
 /**
- * Forces the path parameter defined in path string to be specified.
+ * `bodyParams` should be specified if the method is one of the following:
+ * - POST
+ * - PUT
+ * - PATCH
+ * - DELETE
+ *
+ * `pathParams` should be specified as a record type with the keys from the P string
  *
  * @example
- * type Path = "/user/:id";
- * type Endpoint = __Experimental__Endpoint<"GET", "/user/:id">;
- * const endpoint: Endpoint = {
+ * type E1 = __Experimental__Endpoint<"GET", "/todos/:id">;
+ * const endpoint: E1 = {
  *   method: "GET",
- *   path: "/user/:id",
+ *   path: "/todos/:id",
  *   pathParams: {}
- * // ^^^^^^^^^ Error: Property 'id' is missing in type '{}' but required in type 'Record<"id", PathParamType>'.
+ *   // ^^^^^^^ Error: Property 'id' is missing in type '{}' but required in type 'Record<"id", PathParamType>'.
  * }
+ *
+ * type E2 = __Experimental__Endpoint<"GET", "/todos">;
+ * const endpoint: E2 = {
+ *   method: "GET",
+ *   path: "/todos",
+ *   pathParams: {},
+ *   // ^^^^^^^ Error: Type '{}' is not assignable to type 'never'.
+ *   bodyParams: {},
+ *   // ^^^^^^^ Error: Type '{}' is not assignable to type 'never'.
+ * };
  */
 export type __Experimental__Endpoint<M extends Method, P extends string> = {
   method: M;
@@ -34,4 +49,5 @@ export type __Experimental__Endpoint<M extends Method, P extends string> = {
   pathParams: ExtractParams<P> extends never
     ? never
     : Record<ExtractParams<P>, PathParamType>;
+  bodyParams: M extends HasBodyMethod ? Record<string, any> : never;
 };
